@@ -1,0 +1,25 @@
+import nltk
+nltk.download('wordnet')
+nltk.download('omw-1.4')  # For extended multilingual WordNet
+from nltk.corpus import wordnet as wn
+# Get synsets for the word 'car'
+synsets = wn.synsets('car')
+# Print all synsets of 'car'
+print("All Synsets of 'car':")
+for s in synsets:
+    print(f"- {s.name()}")
+car = synsets[0]  # Select the first synset for 'car'
+# Print details about the selected synset
+print("\nSelected Synset:")
+print("Name:", car.name())  # Print the name of the synset
+print("Definition:", car.definition())  # Print the definition of the synset
+print("Examples:", car.examples())
+print("\nSynonyms (Lemmas):")
+for lemma in car.lemmas():
+    print("-", lemma.name())
+print("\nHypernyms:")
+for hyper in car.hypernyms():
+    print("-", hyper.name(), ":", hyper.definition())
+print("\nHyponyms:")
+for hypo in car.hyponyms():
+    print("-", hypo.name(), ":", hypo.definition())
