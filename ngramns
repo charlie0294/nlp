@@ -1,0 +1,19 @@
+import nltk
+from nltk.util import ngrams
+from nltk.tokenize import word_tokenize
+# Download required tokenizer models
+nltk.download('punkt')
+# Sample input text
+text = "Natural Language Processing with Python is powerful and \
+interesting to train Various Machine learning and Deep learning models."
+# Tokenize the text
+from nltk.tokenize import word_tokenize
+tokens = word_tokenize(text)
+# Print the tokens
+print("Word Tokens:", tokens)
+# Generate trigrams
+tri_gram_result = list(ngrams(tokens, 3))
+# Display the trigrams
+print("Tri-grams:")
+for triplet in tri_gram_result:
+    print(triplet)
