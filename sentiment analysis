@@ -1,0 +1,25 @@
+import nltk
+nltk.download('vader_lexicon')
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+sentences = [
+    "I love this product! It's amazing!",
+    "This is the worst movie I have ever seen.",
+    "The food was okay, not too bad.",
+    "I'm not sure how I feel about this.",
+    "Absolutely fantastic service! Highly recommend."
+]
+
+for sentence in sentences:
+    scores = sia.polarity_scores(sentence)
+    print(f"REVIEW: {sentence}")
+    print(f"Sentiment Scores: {scores}")
+    print("Overall Sentiment:", end=" ")
+
+    if scores['compound'] >= 0.05:
+        print("Positive\n")
+    elif scores['compound'] <= -0.05:
+        print("Negative\n")
+    else:
+        print("Neutral\n")
