@@ -1,0 +1,16 @@
+import nltk
+from nltk.util import bigrams
+from nltk.tokenize import word_tokenize
+# Download required tokenizer models
+nltk.download('punkt')
+text = "Natural Language Processing with Python is powerful and \
+interesting to train Various Machine learning and Deep learning models."
+# Word tokenization
+tokens = word_tokenize(text)
+print("Word Tokens:")
+print(tokens)
+# Generate bi-grams
+bi_grms = list(bigrams(tokens))
+print("\nBi-grams:")
+for bg in bi_grms:
+    print(bg)
