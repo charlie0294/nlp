@@ -1,0 +1,15 @@
+import nltk
+nltk.download('wordnet')
+nltk.download('punkt')
+
+from nltk.wsd import lesk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import wordnet as wn
+
+sentence2 = "I going to park the car near shop."
+tokens2 = word_tokenize(sentence2)
+sense2 = lesk(tokens2, "park")
+
+print("Disambiguated Sense:")
+print("Synset Name:", sense2.name())
+print("Definition:", sense2.definition())
