@@ -1,0 +1,61 @@
+import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+from nltk.corpus import wordnet as wn
+from nltk.tokenize import sent_tokenize, word_tokenize
+from collections import defaultdict
+
+Paragraph = """
+Climate change is one of the most pressing issues facing the world today.
+It refers to long-term alterations in temperature, precipitation, wind patterns,
+and other elements of the Earth's climate system. Human activities,
+particularly the burning of fossil fuels, are the primary cause of climate change.
+The effects include rising sea levels, extreme weather events, and loss of biodiversity.
+Efforts to combat climate change include reducing greenhouse gas emissions,
+switching to renewable energy, and increasing energy efficiency.
+"""
+
+# Tokenize sentences and words
+sentences = sent_tokenize(Paragraph)
+tokenized_sentences = [word_tokenize(sent) for sent in sentences]
+nouns = []
+for sentence in tokenized_sentences:
+    for word in sentence:
+        if wn.synsets(word, pos=wn.NOUN):
+            nouns.append(word.lower())
+
+# Group semantically similar nouns using WordNet synsets
+lexical_chains = defaultdict(list)
+
+for noun in nouns:
+    synsets = wn.synsets(noun, pos=wn.NOUN)
+    if synsets:
+        key = synsets[0].lemmas()[0].name()
+        lexical_chains[key].append(noun)
+
+# Score each sentence by counting how many chain words it contains
+sentence_scores = []
+
+for i, sentence in enumerate(sentences):
+    score = 0
+    words = word_tokenize(sentence.lower())
+    for chain in lexical_chains.values():
+        score += len([w for w in words if w in chain])
+    sentence_scores.append((i, score))
+
+# Sort by score and select top N sentences
+top_sentences = sorted(sentence_scores, key=lambda x: x[1], reverse=True)[:2]
+top_sentences = sorted(top_sentences)  # to keep the order of appearance
+
+# Generate summary
+summary = " ".join([sentences[i] for i, _ in top_sentences])
+print("Summary:\n", summary)
+
+
+
+
+
+
+
